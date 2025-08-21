@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bonus Distribution Rules</title>
+  <style>
+    /* ===== Design Tokens ===== */
+    :root{
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #4f46e5;
+      --primary-2: #22c55e;
+      --ring: rgba(79,70,229,.25);
+      --border: #e5e7eb;
+      --radius: 14px;
+      --shadow: 0 10px 25px rgba(2,6,23,.07), 0 2px 8px rgba(2,6,23,.05);
+      --code: #0f172a;
+      --code-bg:#0b1220;
+    }
+
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg:#0b1220;
+        --card:#0f172a;
+        --text:#e5e7eb;
+        --muted:#94a3b8;
+        --primary:#818cf8;
+        --primary-2:#34d399;
+        --ring: rgba(129,140,248,.35);
+        --border:#1f2a44;
+        --shadow: 0 10px 25px rgba(0,0,0,.45), 0 2px 8px rgba(0,0,0,.35);
+        --code:#e2e8f0;
+        --code-bg:#0b1020;
+      }
+    }
+
+    /* ===== Base ===== */
+    *{box-sizing: border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      line-height:1.6;
+      color:var(--text);
+      background: var(--bg);
+    }
+
+    .container{
+      max-width: 880px;
+      margin: min(8vh,56px) auto;
+      padding: 0 20px 56px;
+    }
+
+    /* ===== Header ===== */
+    .hero{
+      position:relative;
+      padding: 28px 28px 26px;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(79,70,229,.10), rgba(34,197,94,.08));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .hero h1{
+      margin:0 0 6px 0;
+      font-size: clamp(28px, 4vw, 40px);
+      letter-spacing:.2px;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size: clamp(14px, 2vw, 16px);
+    }
+
+    /* ===== Card ===== */
+    .card{
+      margin-top: 22px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .section{
+      padding: 22px clamp(18px, 4vw, 32px);
+      border-top: 1px solid var(--border);
+    }
+    .section:first-child{border-top:none}
+
+    h2{
+      margin:0 0 10px 0;
+      font-size: clamp(18px, 2.6vw, 22px);
+    }
+    p{margin:.4em 0}
+
+    /* ===== Fancy ordered list ===== */
+    ol.list{
+      counter-reset: step;
+      list-style: none;
+      padding:0; margin: 12px 0 2px 0;
+    }
+    .list li{
+      counter-increment: step;
+      display:flex;
+      gap:14px;
+      padding: 12px 0;
+      border-bottom: 1px dashed var(--border);
+      align-items:flex-start;
+    }
+    .list li:last-child{border-bottom: none}
+    .list .num{
+      flex: none;
+      width: 34px; height: 34px;
+      display:grid; place-items:center;
+      border-radius: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      background: rgba(79,70,229,.10);
+      border: 1px solid rgba(79,70,229,.25);
+    }
+    .list .text{flex:1; min-width:0}
+
+    /* ===== Formula / Example ===== */
+    .formula{
+      background: linear-gradient(180deg, rgba(79,70,229,.06), transparent 60%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      color: #111827;
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 6px;
+      border: 1px solid #e5e7eb;
+    }
+
+    details{
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: linear-gradient(180deg, rgba(79,70,229,.06), transparent 60%);
+    }
+    summary{
+      cursor: pointer;
+      font-weight: 600;
+      outline: none;
+    }
+
+    /* ===== Footer ===== */
+    .footer{
+      margin-top: 18px;
+      color:var(--muted);
+      font-size: 13px;
+      text-align:center;
+    }
+
+    /* ===== Small utility ===== */
+    .row{
+      display:flex; gap:14px; flex-wrap:wrap;
+    }
+
+    .badge,
+    .pill{
+      display:flex;
+      align-items:center;   
+      justify-content:center;
+      height:32px;  
+      padding:0 12px;
+      line-height:1; 
+      font-size:13px;
+      border-radius:999px;
+    }
+
+    .badge svg{
+      width:16px; height:16px;
+      margin-right:8px;
+      display:block; 
+    }
+
+    .badge{
+      color: var(--primary);
+      border:1px solid rgba(79,70,229,.35);
+      background: rgba(79,70,229,.10);
+    }
+    .pill{
+      color: var(--muted);
+      border:1px dashed var(--border);
+      background: rgba(148,163,184,.08);
+    }
+    .actions{
+      display:flex;
+      align-items:center; 
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+
+
+
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="hero">
+      <h1>Bonus Distribution Rules</h1>
+      <p class="subtitle">Bonus will be distributed via email several days after the experiment.</p>
+      <div class="actions">
+        <span class="badge" title="Transparent & Auditable">
+          <!-- tiny spark icon -->
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2l2.2 5.7L20 10l-5.4 1.5L12 17l-2.6-5.5L4 10l5.8-2.3L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          Version 1.0
+        </span>
+        <span class="pill">2025-08-21</span>
+      </div>
+    </header>
+
+    <!-- Main Card -->
+    <main class="card">
+      <section class="section">
+        <h2>Overview</h2>
+        <p>All participants receive a guaranteed base payment. Additional bonus depends on both <strong>accuracy</strong> and <strong>completion time</strong>, encouraging careful yet efficient work.</p>
+      </section>
+
+      <section class="section">
+        <h2>Rules</h2>
+
+        <ol class="list">
+          <li>
+            <div class="num">1</div>
+            <div class="text">
+              <strong>Base Payment</strong>: Everyone receives <strong>$2.00</strong> after valid completion.
+            </div>
+          </li>
+          <li>
+            <div class="num">2</div>
+            <div class="text">
+              <strong>Bonus Pool</strong>: Up to <strong>$3.00</strong> additional bonus is available per person.
+            </div>
+          </li>
+          <li>
+            <div class="num">3</div>
+            <div class="text">
+              <strong>Calculation</strong>: Bonus scales with accuracy and speed using the formula below and the examples that follow.
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section">
+        <h2>Formula</h2>
+
+        <div class="formula">
+          <p><code>bonus = $3 × (accuracy_rate) × time_factor</code></p>
+          <p>where <code>time_factor = max(0, 1 − (actual_time − target_time) / grace_window)</code>.</p>
+        </div>
+        
+        <details>
+          <summary>Click here for some exmaples</summary>
+          <p>Example A — 95% accuracy, within target time：</p>
+          <p><code>bonus = 3 × 0.95 × 1.00 = $2.85</code> → total pay = <code>$2 + $2.85 = $4.85</code></p>
+          <p>Example B — 80% accuracy, 5 min over, grace window 10 min：</p>
+          <p><code>time_factor = 1 − 5/10 = 0.5</code> → <code>bonus = 3 × 0.8 × 0.5 = $1.20</code></p>
+        </details>
+
+      </section>
+
+      <section class="section">
+        <h2>Notes</h2>
+        <ul>
+          <li>Bonuses are rounded to the nearest cent.</li>
+          <li>Submissions must meet quality standards (no spam/empty answers).</li>
+          <li>Payments are typically processed within 5-7 business days.</li>
+        </ul>
+      </section>
+    </main>
+
+    <p class="footer">Questions? Contact <a href="mailto:xxx@pku.edu.cn">xxx@pku.edu.cn</a>.</p>
+  </div>
+</body>
+</html>
